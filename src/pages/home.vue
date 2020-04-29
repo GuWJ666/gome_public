@@ -156,25 +156,150 @@
       </nav>
       <!-- 轮播图 -->
       <div class="main_carousel">
-        <div class="carousel">
-          <div class="swiper-container swiper-no-swiping">
-            <div class="swiper-wrapper">
-              <div v-for="(item,index) in carousels" :key="index" class="swiper-slide">
-                <img class="img" :src="item" />
-              </div>
-            </div>
-            <!-- 如果需要分页器 -->
-            <div class="swiper-pagination" slot="pagination"></div>
+        <div class="carousel_box clear">
+          <div class="carousel_wrap">
+            <b-carousel
+              id="carousel-fade"
+              v-model="slide"
+              style="text-shadow: 0px 0px 2px #000"
+              fade
+              controls
+              indicators
+              img-width="750"
+              img-height="450"
+              @sliding-start="onSlideStart"
+              @sliding-end="onSlideEnd"
+            >
+              <b-carousel-slide v-for="(item,index) in carousels" :key="index" :img-src="item.src"></b-carousel-slide>
+            </b-carousel>
           </div>
           <div class="main_news"></div>
         </div>
+      </div>
+      <!-- 实验 -->
+      <div class="test">
+        <!-- <section>
+          <div class="cell" v-for="(item,index) in levels" :key="index">{{item.floor}}</div>
+        </section>
+        <aside>
+          <ul>
+            <li class="floor_nav">楼层导肮</li>
+            <li v-for="(item,index) in levels" :key="index">
+              <a href="#">
+                <span>{{item.floor}}</span>
+                <p>{{item.name}}</p>
+              </a>
+            </li>
+            <li class="up">
+              <svg
+                class="bi bi-chevron-up"
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </li>
+            <li class="down">
+              <svg
+                class="bi bi-chevron-down"
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </li>
+          </ul>
+        </aside>-->
+
+        <!-- 左侧菜单 -->
+        <scroll class="menu-wrapper">
+          <ul>
+            <li class="floor_nav">楼层导肮</li>
+            <li
+              v-for="(item,index) in levels"
+              :key="index"
+              class
+              :class="{active:currentIndex === index}"
+              @click="selectMenu(index)"
+            >
+              <a href="#">
+                <span>{{item.floor}}</span>
+                <p>{{item.name}}</p>
+              </a>
+            </li>
+            <li class="up">
+              <svg
+                class="bi bi-chevron-up"
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </li>
+            <li class="down">
+              <svg
+                class="bi bi-chevron-down"
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </li>
+          </ul>
+        </scroll>
+        <!-- 右侧结构 -->
+        <scroll
+          class="flat-wrapper"
+          ref="flatWrapper"
+          :listenScroll="listenScroll"
+          :probeType="probeType"
+          @scroll="scroll"
+        >
+          <ul ref="flatUl">
+            <li
+              v-for="(item,index) in levels"
+              :key="index"
+              class="item"
+              ref="item"
+              :data-index="index"
+            >{{item.floor}}</li>
+          </ul>
+        </scroll>
       </div>
     </main>
   </div>
 </template>
 
 <script>
-import $ from "jquery";
+// import $ from "jquery";
 import Swiper from "swiper";
 export default {
   data() {
@@ -209,14 +334,14 @@ export default {
         "https://gfs10.gomein.net.cn/T1waxmBTWT1RCvBVdK.png"
       ],
       carousels: [
-        "https://gfs11.gomein.net.cn/T1dxh4BXAv1RCvBVdK.jpg",
-        "https://gfs13.gomein.net.cn/T1mBK4BmJ_1RCvBVdK.jpg",
-        "https://gfs10.gomein.net.cn/T1XYZ4Bsbv1RCvBVdK.jpg",
-        "https://gfs12.gomein.net.cn/T1sBV4B5x_1RCvBVdK.jpg",
-        "https://gfs11.gomein.net.cn/T1MyhmBgVT1RCvBVdK.jpg",
-        "https://gfs10.gomein.net.cn/T1LsV4ByV_1RCvBVdK.jpg",
-        "https://gfs12.gomein.net.cn/T1HxJ4B_xv1RCvBVdK.jpg",
-        "https://gfs10.gomein.net.cn/T1aYh4Bj_v1RCvBVdK.jpg"
+        { index: 0, src: "https://gfs11.gomein.net.cn/T1dxh4BXAv1RCvBVdK.jpg" },
+        { index: 1, src: "https://gfs13.gomein.net.cn/T1mBK4BmJ_1RCvBVdK.jpg" },
+        { index: 2, src: "https://gfs10.gomein.net.cn/T1XYZ4Bsbv1RCvBVdK.jpg" },
+        { index: 3, src: "https://gfs12.gomein.net.cn/T1sBV4B5x_1RCvBVdK.jpg" },
+        { index: 4, src: "https://gfs11.gomein.net.cn/T1MyhmBgVT1RCvBVdK.jpg" },
+        { index: 5, src: "https://gfs10.gomein.net.cn/T1LsV4ByV_1RCvBVdK.jpg" },
+        { index: 6, src: "https://gfs12.gomein.net.cn/T1HxJ4B_xv1RCvBVdK.jpg" },
+        { index: 7, src: "https://gfs10.gomein.net.cn/T1aYh4Bj_v1RCvBVdK.jpg" }
       ],
       classify: [
         ["手机", "充值"],
@@ -234,63 +359,23 @@ export default {
         ["运动户外", "钟表首饰"],
         ["汽车整车", "汽车用品"],
         ["国美管家"]
+      ],
+      slide: 0, //轮播下标
+      levels: [
+        { floor: "1F", name: "手机通讯" },
+        { floor: "2F", name: "电脑数码" },
+        { floor: "3F", name: "家用电器" },
+        { floor: "4F", name: "厨房卫浴" },
+        { floor: "5F", name: "国美超市" },
+        { floor: "6F", name: "家居家装" },
+        { floor: "7F", name: "汽车用品" }
       ]
     };
   },
   created() {},
   mounted() {
+    this.bgChange();
     this.styleC();
-    new Swiper(".swiper-container", {
-      loop: true, // 循环模式选项
-      autoplay: true,
-      effect: "fade", //轮播样式
-      //   fadeEffect: {
-      //     crossFade: true
-      //   },
-      // 如果需要分页器
-
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true
-      },
-      //slider切换
-      on: {
-        slideChangeTransitionStart: function() {
-          let index = this.activeIndex;
-          let color = "rgb(51, 91, 248)";
-          switch (index) {
-            case 1:
-              color = "rgb(51, 91, 248)";
-              break;
-            case 2:
-              color = "rgb(142, 223, 208)";
-              break;
-            case 3:
-              color = "rgb(186, 191, 187)";
-              break;
-            case 4:
-              color = "rgb(254, 166, 154)";
-              break;
-            case 5:
-              color = "rgb(134, 218, 202)";
-              break;
-            case 6:
-              color = "rgb(255, 151, 165)";
-              break;
-            case 7:
-              color = "rgb(168, 220, 135)";
-              break;
-            case 8:
-              color = "rgb(254, 165, 151)";
-              break;
-            case 9:
-              color = "rgb(51, 91, 248)";
-              break;
-          }
-          $(".main_carousel").css("background", color);
-        }
-      }
-    });
   },
   methods: {
     styleC() {
@@ -318,6 +403,42 @@ export default {
             .hide();
         }
       );
+    },
+    onSlideStart(slide) {
+      let color = "rgb(51, 91, 248)";
+      switch (slide) {
+        case 0:
+          color = "rgb(51, 91, 248)";
+          break;
+        case 1:
+          color = "rgb(142, 223, 208)";
+          break;
+        case 2:
+          color = "rgb(186, 191, 187)";
+          break;
+        case 3:
+          color = "rgb(254, 166, 154)";
+          break;
+        case 4:
+          color = "rgb(134, 218, 202)";
+          break;
+        case 5:
+          color = "rgb(255, 151, 165)";
+          break;
+        case 6:
+          color = "rgb(168, 220, 135)";
+          break;
+        case 7:
+          color = "rgb(254, 165, 151)";
+          break;
+      }
+      $(".main_carousel").css("background", color);
+      this.slide = slide;
+    },
+    onSlideEnd(slide) {},
+    bgChange() {
+      let color = "rgb(51, 91, 248)";
+      $(".main_carousel").css("background", color);
     }
   }
 };
@@ -553,27 +674,64 @@ main > nav {
 .main_nav_mid > a:hover {
   color: #f5004b;
 }
-.carousel {
+.carousel_box {
   width: 1200px;
-  height: 450px;
   margin: 0 auto;
 }
-.swiper-container {
+
+.carousel_wrap {
   width: 750px;
-  margin-left: 200px;
   float: left;
+  margin-left: 200px;
 }
-/* 轮播分页样式 */
-.my-bullet {
-  width: 30px;
-  height: 13px;
-  margin: 0 4px;
-}
+
 .main_news {
   width: 250px;
   height: 450px;
   opacity: 0.5;
   float: left;
-  background:#fff;
+  background: #fff;
+}
+.item {
+  width: 1200px;
+  height: 470px;
+  border: 1px solid #ccc;
+  margin: 0 auto;
+  margin-top: 20px;
+  font-size: 50px;
+  text-align: center;
+  line-height: 470px;
+  border: 2px solid;
+}
+.menu-wrapper > ul {
+  z-index: 960;
+  position: fixed;
+  left: 35.5px;
+  top: calc(50% - 177px);
+  display: block;
+  border: 1px solid #e6e6e6;
+  border-bottom: none;
+}
+.menu-wrapper li {
+  width: 64px;
+  text-align: center;
+  height: 44px;
+  border-bottom: 1px solid #e6e6e6;
+  /* line-height: 44px; */
+}
+.menu-wrapper .floor_nav {
+  height: 31px;
+  background: #f6f6f6;
+  line-height: 31px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.menu-wrapper .floor_nav > a {
+  font-size: 12px;
+  color: #e5e5e5;
+}
+.menu-wrapper .up,
+.menu-wrapper .down {
+  height: 30px;
 }
 </style>
