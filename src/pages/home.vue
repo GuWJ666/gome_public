@@ -224,76 +224,8 @@
             </li>
           </ul>
         </aside>-->
-
-        <!-- 左侧菜单 -->
-        <scroll class="menu-wrapper">
-          <ul>
-            <li class="floor_nav">楼层导肮</li>
-            <li
-              v-for="(item,index) in levels"
-              :key="index"
-              class
-              :class="{active:currentIndex === index}"
-              @click="selectMenu(index)"
-            >
-              <a href="#">
-                <span>{{item.floor}}</span>
-                <p>{{item.name}}</p>
-              </a>
-            </li>
-            <li class="up">
-              <svg
-                class="bi bi-chevron-up"
-                width="1em"
-                height="1em"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </li>
-            <li class="down">
-              <svg
-                class="bi bi-chevron-down"
-                width="1em"
-                height="1em"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </li>
-          </ul>
-        </scroll>
-        <!-- 右侧结构 -->
-        <scroll
-          class="flat-wrapper"
-          ref="flatWrapper"
-          :listenScroll="listenScroll"
-          :probeType="probeType"
-          @scroll="scroll"
-        >
-          <ul ref="flatUl">
-            <li
-              v-for="(item,index) in levels"
-              :key="index"
-              class="item"
-              ref="item"
-              :data-index="index"
-            >{{item.floor}}</li>
-          </ul>
-        </scroll>
       </div>
+      <echart></echart>
     </main>
   </div>
 </template>
@@ -301,7 +233,11 @@
 <script>
 // import $ from "jquery";
 import Swiper from "swiper";
+import echart from "../components/myEcharts"
 export default {
+  components:{
+    echart
+  },
   data() {
     return {
       value1: 0,
