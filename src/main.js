@@ -11,6 +11,18 @@ import "bootstrap/dist/css/bootstrap.css"
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import "bootstrap/dist/js/bootstrap.min.js"
 import echarts from "echarts" //引入echarts
+import { Button, Cell, CellGroup, Image as VanImage, Loading, Col, Row, Popup, Calendar,Field } from "vant"
+import 'vant/lib/index.css';
+Vue.use(Button);
+Vue.use(Cell);
+Vue.use(CellGroup);
+Vue.use(VanImage);
+Vue.use(Loading);
+Vue.use(Col);
+Vue.use(Row);
+Vue.use(Popup);
+Vue.use(Calendar);
+Vue.use(Field);
 Vue.prototype.$echarts = echarts //将echarts加到vue的原型上
 Vue.use(BootstrapVue)
 

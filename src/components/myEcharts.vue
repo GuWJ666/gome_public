@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="echart-container">
     <div id="echart1"></div>
     <div id="echart2"></div>
   </div>
@@ -195,27 +195,27 @@ export default {
           },
           {
             // id: "dataZoomX",
-            id:"zoomX",
+            id: "zoomX",
             type: "slider",
             xAxisIndex: 1,
             filterModel: "filter"
           },
           {
             // id: "dataZoomY",
-            id:"zoomY",
+            id: "zoomY",
             type: "slider",
             yAxisIndex: 1,
             filterModel: "empty"
           }
         ],
         visualMap: {
-            min:0,
-            max:300,
-            // splitNumber:5,
-            color:['#d94e5d','#eac376','#50a3ba'],
-            textStyle:{
-                color:'#fff'
-            }
+          min: 0,
+          max: 300,
+          // splitNumber:5,
+          color: ["#d94e5d", "#eac376", "#50a3ba"],
+          textStyle: {
+            color: "#fff"
+          }
         },
         xAxis: [
           //每个图表的x轴配置
@@ -272,7 +272,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
+.echart-container {
+  padding: 100px;
+}
 #echart1 {
   width: 300px;
   height: 300px;

@@ -226,6 +226,7 @@
         </aside>-->
       </div>
       <echart></echart>
+      <vant></vant>
     </main>
   </div>
 </template>
@@ -234,9 +235,11 @@
 // import $ from "jquery";
 import Swiper from "swiper";
 import echart from "../components/myEcharts"
+import vant from "../components/vant"
 export default {
   components:{
-    echart
+    echart,
+    vant
   },
   data() {
     return {
