@@ -227,6 +227,7 @@
       </div>
       <echart></echart>
       <vant></vant>
+      <gridLayout></gridLayout>
     </main>
   </div>
 </template>
@@ -236,10 +237,12 @@
 import Swiper from "swiper";
 import echart from "../components/myEcharts"
 import vant from "../components/vant"
+import gridLayout from "../components/grid-layout"
 export default {
   components:{
     echart,
-    vant
+    vant,
+    gridLayout
   },
   data() {
     return {

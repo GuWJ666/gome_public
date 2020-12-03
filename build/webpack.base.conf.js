@@ -1,3 +1,9 @@
+/*
+ * @Author: guwenjiang
+ * @Date: 2020-12-02 10:44:43
+ * @LastEditors: guwenjiang
+ * @LastEditTime: 2020-12-02 13:07:40
+ */
 'use strict'
 const webpack = require('webpack')
 const path = require('path')
@@ -33,10 +39,6 @@ module.exports = {
     module: {
         rules: [
             {
-                test:/\.less$/,
-                loader:"style-loader!css-loader!less-loader"
-            },
-            {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: vueLoaderConfig
@@ -69,6 +71,14 @@ module.exports = {
                     limit: 10000,
                     name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
                 }
+            },
+            {
+                test:/\.less$/,
+                loader:"style-loader!css-loader!less-loader"
+            },
+            {
+                test: /\.scss$/,
+                loader: ['style', 'css', 'scss']
             }
         ]
     },
